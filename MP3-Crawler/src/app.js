@@ -6,7 +6,7 @@
 const puppeteer = require("puppeteer")
 const uuidv4 = require("uuid").v4
 const async = require("async")
-const url = "https://zingmp3.vn/album/Nuoc-Mat-Va-Em-Mr-Siro/ZWZB8EEW.html"
+const url = "https://zingmp3.vn/album/Chi-Co-The-La-AMEE-AMEE/ZEC6FEWC.html"
 const shell = require("shelljs")
 const dbUtil = require("./util/databaseUtil")
 
@@ -37,7 +37,7 @@ const startCrawler = async function () {
     const data = await page.evaluate((_) => {
 
         //get info song
-        let mp3Card = document.querySelectorAll(".card-info")[2]
+        let mp3Card = document.querySelectorAll(".card-info")[0]
         let songName = mp3Card.querySelector(".title a").innerHTML
         let singer = mp3Card.querySelectorAll(".artist a")[0].title
         let image = document.querySelectorAll(".bor-bottom")[0]
@@ -55,7 +55,7 @@ const startCrawler = async function () {
         albumName = albumName.querySelector(".info-body h3").innerHTML
 
         //download song
-        let mp3File = document.querySelectorAll(".list-buttons")[2]
+        let mp3File = document.querySelectorAll(".list-buttons")[0]
         mp3File = mp3File.querySelector(".normal-view")
         mp3File = mp3File.querySelectorAll("li")[3]
         mp3File.querySelector("a").click()
@@ -64,7 +64,7 @@ const startCrawler = async function () {
         mp3File = mp3File.querySelectorAll("a")[0]
         mp3File.click()
 
-        function clickDownload(){
+        function clickDownload() {
             mp3File = document.querySelectorAll(".z-packages")[0]
             mp3File.querySelectorAll("a")[0].click()
         }
@@ -82,7 +82,7 @@ const startCrawler = async function () {
     mp3LinkName = await mp3LinkName.split(" ")[0]
     await shell.exec(`move ..\\mp3\\${mp3LinkName}  ..\\..\\MP3-Backend\\Data`)
     console.log(`..\\mp3\${mp3LinkName}`)
-    return {...data,mp3LinkName}
+    return { ...data, mp3LinkName }
     // return { ...data }
 }
 // move c:\example.txt h:
@@ -100,7 +100,7 @@ const saveInDB = async function ({
     mp3LinkName
 }) {
     const transaction = await dbUtil.beginTransaction()
-    const category = "Việt Nam"
+    const category = "US-UK"
     try {
         const checkAlbum = await checkAlbumExist(albumName)
         const checkSinger = await checkSingerExist(singer)
@@ -109,6 +109,7 @@ const saveInDB = async function ({
         let albumID
         let singerID
         let songID = uuidv4()
+        console.log(`hieu ${songID} thien`)
         let categoryID
         //kiem tra co album chua ko thi tao cai moi 
         if (checkAlbum) {
@@ -121,38 +122,38 @@ const saveInDB = async function ({
             }
         }
         //kiem tra ca si
-        if (checkSinger){
+        if (checkSinger) {
             singerID = checkSinger
         } else {
             singerID = uuidv4()
             const addSingerSql = "INSERT INTO singers(id,name) VALUE(?,?)"
-            await dbUtil.execute(addSingerSql,[singerID,singer],transaction)
+            await dbUtil.execute(addSingerSql, [singerID, singer], transaction)
         }
         //them singer album
-        if (albumName){
+        if (albumName) {
             const addSingerAlbumSql = "INSERT IGNORE INTO singer_album(albumId,singerId) VALUES(?,?)"
-            await dbUtil.execute(addSingerAlbumSql,[albumID,singerID],transaction)
+            await dbUtil.execute(addSingerAlbumSql, [albumID, singerID], transaction)
         }
         // check categories
-        if (checkCategory){
+        if (checkCategory) {
             categoryID = checkCategory
-        }else{
+        } else {
             categoryID = uuidv4()
             const addCategorySql = "INSERT INTO categories(id,name) VALUES(?,?)"
-            await dbUtil.execute(addCategorySql,[categoryID,category], transaction)
-            
+            await dbUtil.execute(addCategorySql, [categoryID, category], transaction)
+
 
         }
 
         //them song
         const addSongSql = "INSERT INTO songs(id,name,image,length,albumId,url) VALUES(?,?,?,?,?,?)"
-        await dbUtil.execute(addSongSql,[songID,songName,image,length,albumID,mp3LinkName],transaction)
+        await dbUtil.execute(addSongSql, [songID, songName, image, length, albumID, mp3LinkName], transaction)
         //them vao singer-song
         const addSingerSongSql = "INSERT IGNORE INTO singer_song(singerId,songId) VALUES(?,?)"
-        await dbUtil.execute(addSingerSongSql,[singerID,songID],transaction)
+        await dbUtil.execute(addSingerSongSql, [singerID, songID], transaction)
         //them song-category
         const addSongCategorySql = "INSERT INTO songs_categorie(songId,categorieId) VALUES(?,?)"
-        await dbUtil.execute(addSongCategorySql,[songID,categoryID],transaction)
+        await dbUtil.execute(addSongCategorySql, [songID, categoryID], transaction)
         await dbUtil.commitTransaction(transaction)
         console.log("thuc hien dc r")
     } catch (error) {
@@ -196,3 +197,5 @@ const checkCategorieExist = async function (name) {
 //cai dat lai mariadb ghi nho tai khoan root de ket noi
 //root:123456
 //categories tao bang tay thoi Hieu oi
+
+
