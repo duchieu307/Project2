@@ -6,6 +6,10 @@ const path = "/album"
 const router = Router()
 
 ////
+
+//get new album
+router.get("/new",throwAsNext(controller.getNewAlbum))
+
 //get album detail
 router.get("/:id", throwAsNext(controller.getAlbumDetail))
 

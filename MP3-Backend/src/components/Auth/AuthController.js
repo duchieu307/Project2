@@ -6,23 +6,23 @@ export const signUp = async (req, res) => {
     const { username, password, name, rePassword } = req.body
     console.log(req.body)
     if (password != rePassword) {
-        res.send("Sai repass")
-        return
+        res.status(401).send("Sai repass")
     }
     const passwordHash = hash(password)
-    await dbAccess.signUp({username, passwordHash, name})
-    res.send("Tao dc roi ah")
+    await dbAccess.signUp({ username, passwordHash, name })
+    res.ok()
 }
 
-export const login = async (req,res) => {
-    const {username,password} = req.body
+export const login = async (req, res) => {
+    const { username, password } = req.body
     console.log(req.body)
     const user = await dbAccess.getUserByUsername(username)
-    if (user){
-        const passwordValid = await common.checkPassword(password,user.password)
+    if (user) {
+        const passwordValid = await common.checkPassword(password, user.password)
         console.log(user.password)
         if (passwordValid) {
-            res.send("Log in")
+            const token = await common.generateToken(user.id)
+            res.json({ token })
         } else {
             res.send("Wrong password")
         }

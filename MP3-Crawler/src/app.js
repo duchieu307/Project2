@@ -6,7 +6,7 @@
 const puppeteer = require("puppeteer")
 const uuidv4 = require("uuid").v4
 const async = require("async")
-const url = "https://zingmp3.vn/album/Chi-Co-The-La-AMEE-AMEE/ZEC6FEWC.html"
+const url = "https://zingmp3.vn/album/Doa-Quynh-Lan-Single-YuniBoo-H2K/6I0DEWF6.html"
 const shell = require("shelljs")
 const dbUtil = require("./util/databaseUtil")
 
