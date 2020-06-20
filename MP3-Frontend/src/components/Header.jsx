@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap"
 import {Link} from "react-router-dom"
 import {withRouter} from "react-router-dom"
+import UserNav from "../containers/UserNav"
 
 
 class Header extends Component {
@@ -21,6 +22,9 @@ class Header extends Component {
                     <Form inline className="form-search">
                         <FormControl type="text" placeholder="Search song,album..." className="sr-sm-2 " id="input-search" />
                     </Form>
+                    <Nav>
+                        <UserNav/>
+                    </Nav>
                 </Navbar>
             </div>
         );

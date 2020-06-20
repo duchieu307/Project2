@@ -21,7 +21,6 @@ class NewSong extends Component {
                 <h3>Các bài hát mới</h3>
                 <Row>
                     {this.state.items.map((song,index) => {
-                        console.log(song)
                         if (index > 11) return <></>
                         return (
                             <Col key={index} col lg={2} md={2} className="playable song" >

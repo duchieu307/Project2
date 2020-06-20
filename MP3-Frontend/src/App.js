@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container"
 import Header from "./components/Header"
 import Home from "./containers/Home"
 import SignUp from "./containers/SignUp"
+import Login from "./containers/Login"
 
 export default class App extends Component {
     render() {
@@ -15,6 +16,7 @@ export default class App extends Component {
                         <Header />
                         <Route exact path="/" component={Home} />
                         <Route path="/signup" component={SignUp} />
+                        <Route path="/login" component={Login} />
                     </Router>
                 </Container>
             </div>
