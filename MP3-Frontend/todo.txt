@@ -1,5 +1,2 @@
-redux, reduce, action, bat dau tu app
-
-xu ly event voi hook
-1. container lay data truc tiep tu component qua cac ham lien quan toi cac variable //khang chon cai nay
-2. component dua vao event submit lay toan bo data  roi gui cho container xu ly
+lam comment 
+voi cac trang linh tinh con lai

@@ -8,8 +8,7 @@ export const authMiddleware = async (req, res, next) => {
         if (token) {
             try {
                 const tokenDecoded = await jwtUlti.verifyToken(token)
-                console.log("tokenDecoded ne`: ",tokenDecoded)
-                req.isLogged = true;
+                req.isLogged = true;tokenDecoded
                 req.userId = tokenDecoded.id
                 req.token = token
             } catch (error) {

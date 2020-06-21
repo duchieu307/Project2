@@ -5,6 +5,8 @@ import Header from "./components/Header"
 import Home from "./containers/Home"
 import SignUp from "./containers/SignUp"
 import Login from "./containers/Login"
+import SongPage from "./containers/SongPage"
+import AudioController from "./containers/AudioController"
 
 export default class App extends Component {
     render() {
@@ -17,8 +19,10 @@ export default class App extends Component {
                         <Route exact path="/" component={Home} />
                         <Route path="/signup" component={SignUp} />
                         <Route path="/login" component={Login} />
+                        <Route path="/song/detail/:id" component={SongPage}/>
                     </Router>
                 </Container>
+                <AudioController/>
             </div>
         )
     }

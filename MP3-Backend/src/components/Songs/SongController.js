@@ -13,6 +13,13 @@ export const getNewSong = async (req, res) => {
     res.send(songs)
 }
 
+export const getSongDetail = async (req,res) => {
+    const { id } = req.params;
+    const userId = req.isLogged ? req.userId : null
+    const song = await dbController.getSongDetail(id,userId)
+    res.send(song)
+}
+
 export const getMP3 = async (req, res) => {
     const { id } = req.params
     console.log("song id: ", id)

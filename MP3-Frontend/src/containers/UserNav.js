@@ -11,9 +11,9 @@ const UserNav = (props) => {
     //map state cua component voi reducer store
     const user = useSelector(state => state.auth)
 
-    if(user.logined) {
-        dispatch(getMe())
-    }
+    // if(user.logined) {
+    //     dispatch(getMe())
+    // }
 
     useEffect(() => {
         dispatch(checkInit())
