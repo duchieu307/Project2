@@ -16,6 +16,7 @@ export default function (state = { activeSong: [], list: true }, action) {
                 return { ...state, list: true, activeSong: [...state.activeSong, action.payload.songActive] }
             }
         case REMOVE_LIST:
+            console.log("tai sao may lai chay dcm")
             return { ...state, list: false }
         default:
             return state;

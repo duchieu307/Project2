@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useParams } from "react-router";
 import SongPageUI from "../components/SongPage"
 import { playSong } from "../actions/song"
-
+import Comment from "./Comment"
 
 const SongPage = (props) => {
 
@@ -58,9 +58,9 @@ const SongPage = (props) => {
             setState(prevState => ({
                 ...prevState,
                 liked: true,
-                item : {
+                item: {
                     ...state.item,
-                    likeNumber: parseInt(state.item.likeNumber) + 1 
+                    likeNumber: parseInt(state.item.likeNumber) + 1
                 }
             }))
             await axios.post("/users/like", {
@@ -70,9 +70,9 @@ const SongPage = (props) => {
             setState(prevState => ({
                 ...prevState,
                 liked: false,
-                item : {
+                item: {
                     ...state.item,
-                    likeNumber: parseInt(state.item.likeNumber) -1
+                    likeNumber: parseInt(state.item.likeNumber) - 1
                 }
             }))
             await axios.post("/users/unlike", {
@@ -87,8 +87,14 @@ const SongPage = (props) => {
     }, []) // = compomentDidMount
 
     return (
-        <SongPageUI handleLikeSong={handleLikeSong} handlePlaySong={handlePlaySong} handleClose={handleClose} data={state} />
+
+        <div className='section'>
+            <SongPageUI handleLikeSong={handleLikeSong} handlePlaySong={handlePlaySong} handleClose={handleClose} data={state} />
+            <Comment  songId={id} logined={user.logined} />
+        </div>
     )
+
+
 }
 
 export default SongPage

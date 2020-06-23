@@ -7,6 +7,8 @@ import SignUp from "./containers/SignUp"
 import Login from "./containers/Login"
 import SongPage from "./containers/SongPage"
 import AudioController from "./containers/AudioController"
+import ProtectedRoute from "./containers/ProtectedRoute"
+import UserPage from "./containers/UserPage"
 
 export default class App extends Component {
     render() {
@@ -20,6 +22,7 @@ export default class App extends Component {
                         <Route path="/signup" component={SignUp} />
                         <Route path="/login" component={Login} />
                         <Route path="/song/detail/:id" component={SongPage}/>
+                        <ProtectedRoute path="/user/:id" component={UserPage}></ProtectedRoute>
                     </Router>
                 </Container>
                 <AudioController/>

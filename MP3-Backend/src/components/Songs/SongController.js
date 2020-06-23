@@ -3,7 +3,7 @@ import path from "path"
 
 
 
-export const getSlideSong = async (req,res) => {
+export const getSlideSong = async (req, res) => {
     const songs = await dbController.getSlideSong()
     res.send(songs)
 }
@@ -13,13 +13,27 @@ export const getNewSong = async (req, res) => {
     res.send(songs)
 }
 
-export const getSongDetail = async (req,res) => {
+export const getSongDetail = async (req, res) => {
+    console.log("req bao gom", req.pagination)
     const { id } = req.params;
     const userId = req.isLogged ? req.userId : null
-    const song = await dbController.getSongDetail(id,userId)
+    const song = await dbController.getSongDetail(id, userId)
     res.send(song)
 }
 
+export const getCommentById = async (req, res) => {
+    const userId = req.isLogged ? req.userId : null
+    const comments = await dbController.getCommentById(req.params.id, userId, req.pagination)
+    res.send(comments)
+}
+
+export const getSongLikedByUser = async (req, res) => {
+    const userId = req.isLogged ? req.userId : null
+    const song = await dbController.getSongLikedByUser(userId)
+    res.send(song)
+}
+
+//check lai url
 export const getMP3 = async (req, res) => {
     const { id } = req.params
     console.log("song id: ", id)

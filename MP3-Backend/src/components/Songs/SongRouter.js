@@ -1,6 +1,6 @@
 import { Router } from "express"
 import * as controller from "./SongController"
-import { throwAsNext, authMiddleware, requireLogin } from "../../middleware"
+import { throwAsNext, authMiddleware, requireLogin, paginationMiddleware } from "../../middleware"
 
 const path = "/song"
 const router = Router()
@@ -12,7 +12,17 @@ router.get("/new", throwAsNext(controller.getNewSong))
 //get slide
 router.get("/slide", throwAsNext(controller.getSlideSong))
 //get song detail
-router.get("/detail/:id",authMiddleware,throwAsNext(controller.getSongDetail))
+router.get("/detail/:id", authMiddleware, throwAsNext(controller.getSongDetail))
+//get comment qua song id
+router.get('/comment/:id', authMiddleware, paginationMiddleware({
+    maxSize: 30,
+    defaultSize: 20,
+}), throwAsNext(controller.getCommentById))
+// get song liked by user
+router.get('/like', authMiddleware, requireLogin, paginationMiddleware({
+    maxSize: 30,
+    defaultSize: 20,
+}), throwAsNext(controller.getSongLikedByUser))
 //play music
 router.get("/:id", throwAsNext(controller.getMP3))
 

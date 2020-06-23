@@ -12,7 +12,7 @@ class SongPage extends Component {
     render() {
         console.log("data o song page:", this.props)
         return (
-            <div className="section">
+            <div className="">
                 <Modal show={this.props.data.show} onHide={this.props.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Chú ý</Modal.Title>
