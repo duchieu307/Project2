@@ -115,6 +115,41 @@ export const getSongLikedByUser = async (userId) => {
   })
 }
 
+export const getSongByArtist = async (id, userId) => {
+  const sql = `SELECT songs.id,image,songs.name as nameSong,
+  singers.name as singer, singers.id as singerId FROM songs,singers,singer_song
+  WHERE singers.id = singer_song.singerId
+  AND singer_song.songId = songs.id
+  AND songs.id = ANY (
+    SELECT songId FROM singer_song
+    WHERE singerId = ?
+  )
+  ORDER BY createdAt DESC`
+  const result = await dbUtil.query(sql, [id])
+  const songs = dbUtil.group(result.map(row => ({
+    ...dbUtil.nested(row),
+  })), 'id', 'singer', 'singerId')
+  if (userId) {
+    const listId = songs.map(song => song.id)
+    console.log(listId)
+    const checkSql = `
+      SELECT songId FROM like_song
+      WHERE userId = ?
+      AND songId IN (?)
+    `;
+    const listCheck = await dbUtil.query(checkSql, [userId, listId])
+    console.log('list check', listCheck)
+    const listIdLiked = listCheck.map((doc) => doc.songId)
+    console.log('list id like', listIdLiked);
+    const lastSongs = songs.map((doc) => {
+      if (listIdLiked.includes(doc.id)) return { ...doc, liked: true }
+      return { ...doc, liked: false }
+    });
+    return lastSongs
+  }
+  return songs
+}
+
 export const getMP3 = async (id) => {
   const sql = "SELECT url FROM songs WHERE id = ?"
   const result = await dbUtil.queryOne(sql, [id])

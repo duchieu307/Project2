@@ -9,23 +9,44 @@ const UserPage = (props) => {
 
     let { id } = useParams()
 
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.auth)
+
     const [state, setState] = useState()
 
     async function getListSong(id) {
         const axios = await axiosAuth()
         const result = await axios.get("/song/like")
+        console.log("Data list song: ", result)
         setState(prevState => ({
             ...prevState,
             listSong: result.data
         }))
-    } 
-    
+    }
+
+    function handlePlaySong(currentSong) {
+        dispatch(playSong(currentSong))
+    }
+
+    async function handleUnLikeSong(id) {
+        const axios = await axiosAuth();
+        await axios.post(`/users/unlike/`, {
+            songId: id
+        })
+        window.location.reload()
+    }
+
     useEffect(() => {
-        getListSong(id)
-    },[]) //componentDidMount
+        getListSong()
+    }, []) //componentDidMount
+
+    useEffect(() => {
+        getListSong()
+    })
 
     return (
-        <UserPageUI data={state} />
+        <UserPageUI handleUnLikeSong={handleUnLikeSong} handlePlaySong={handlePlaySong} data={state} />
     )
 }
 

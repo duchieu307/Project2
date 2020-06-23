@@ -9,6 +9,8 @@ import SongPage from "./containers/SongPage"
 import AudioController from "./containers/AudioController"
 import ProtectedRoute from "./containers/ProtectedRoute"
 import UserPage from "./containers/UserPage"
+import SearchPage from "./containers/SearchPage"
+import ArtistPage from "./containers/ArtistPage"
 
 export default class App extends Component {
     render() {
@@ -23,6 +25,8 @@ export default class App extends Component {
                         <Route path="/login" component={Login} />
                         <Route path="/song/detail/:id" component={SongPage}/>
                         <ProtectedRoute path="/user/:id" component={UserPage}></ProtectedRoute>
+                        <Route path="/search" component={SearchPage}/>
+                        <Route path="/artist/detail/:id" component={ArtistPage}/>
                     </Router>
                 </Container>
                 <AudioController/>

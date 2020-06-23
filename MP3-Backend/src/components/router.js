@@ -4,6 +4,7 @@ import AlbumRouter from "./Albums/AlbumRouter"
 import ArtistRouter from "./Artist/ArtistRouter"
 import UserRouter from "./Users/UserRouter"
 import CategoriesRouter from './Categories/CategoryRouter'
+import SearchRouter from "./Search/SearchRouter"
 
 export default [
     AuthRouter,
@@ -11,5 +12,6 @@ export default [
     AlbumRouter,
     ArtistRouter,
     UserRouter,
-    CategoriesRouter
+    CategoriesRouter,
+    SearchRouter
 ]

@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 export const paginationMiddleware = ({ maxSize = 20, defaultSize = 10, filterKeys = null, sortKeys = null }) => (req, res, next) => {
   const limit = Math.min(Math.max(1, _.get(req, 'query.size', defaultSize)), maxSize);
-
+  console.log("req khi search", req.query)
   const page = Math.max(1, _.get(req, 'query.page', 1));
   const start = Math.max(0, _.get(req, 'query._start', 0));
   const end = Math.max(1, _.get(req, 'query._end', 1));

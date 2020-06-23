@@ -33,6 +33,12 @@ export const getSongLikedByUser = async (req, res) => {
     res.send(song)
 }
 
+export const getSongByArtist = async (req, res) => {
+    const userId = req.isLogged ? req.userId : null
+    const songs = await dbController.getSongByArtist(req.params.id, userId)
+    res.send(songs)
+}
+
 //check lai url
 export const getMP3 = async (req, res) => {
     const { id } = req.params
