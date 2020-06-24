@@ -25,6 +25,8 @@ router.get('/like', authMiddleware, requireLogin, paginationMiddleware({
 }), throwAsNext(controller.getSongLikedByUser))
 //get song by artist
 router.get('/artist/:id', authMiddleware, throwAsNext(controller.getSongByArtist))
+// get song by album
+router.get('/album/:id', authMiddleware, throwAsNext(controller.getSongByAlbum))
 //play music
 router.get("/:id", throwAsNext(controller.getMP3))
 

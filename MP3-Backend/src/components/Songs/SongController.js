@@ -39,7 +39,14 @@ export const getSongByArtist = async (req, res) => {
     res.send(songs)
 }
 
+export const getSongByAlbum = async (req, res) => {
+    const userId = req.isLogged ? req.userId : null
+    const songs = await dbController.getSongByAlbum(req.params.id, userId)
+    res.send(songs)
+}
+
 //check lai url
+const folderData = "C:\\Users\\duchi\\Desktop\\Project-2\\MP3-Backend\\Data\\";
 export const getMP3 = async (req, res) => {
     const { id } = req.params
     console.log("song id: ", id)
@@ -48,7 +55,7 @@ export const getMP3 = async (req, res) => {
     // console.log(`hieu C:\\${url}thienthien`)
     // console.log(`url: ${url.substring(0, url.length - 1)} thiennn`)
     // console.log(url.length)
-    res.sendFile("C:\\" + url.substring(0, url.length - 1))
+    res.sendFile(folderData + url.substring(0, url.length - 1))
     // try {
     //     res.sendFile("C:\\" + url.substring(0, url.length - 1))
     // } catch (error) {

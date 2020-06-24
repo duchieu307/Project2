@@ -11,6 +11,7 @@ import ProtectedRoute from "./containers/ProtectedRoute"
 import UserPage from "./containers/UserPage"
 import SearchPage from "./containers/SearchPage"
 import ArtistPage from "./containers/ArtistPage"
+import AlbumPage from "./containers/AlbumPage"
 
 export default class App extends Component {
     render() {
@@ -27,6 +28,7 @@ export default class App extends Component {
                         <ProtectedRoute path="/user/:id" component={UserPage}></ProtectedRoute>
                         <Route path="/search" component={SearchPage}/>
                         <Route path="/artist/detail/:id" component={ArtistPage}/>
+                        <Route path="/album/:id" component={AlbumPage}/>
                     </Router>
                 </Container>
                 <AudioController/>
